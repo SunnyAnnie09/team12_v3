@@ -46,12 +46,10 @@ public class DefaultKeyValue implements KeyValue,Serializable{
     }
 
     public long getLong(String key) {
-
         return Long.parseLong((String)kvs.getOrDefault(key, 0L));
     }
 
     public double getDouble(String key) {
-
         return Double.parseDouble((String)kvs.getOrDefault(key, 0.0d));
     }
 
