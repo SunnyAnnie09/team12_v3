@@ -29,7 +29,9 @@ public class Consumer {
 
         if(re==null){
             readPos++;
-            if(readPos<topics.size()) return poll();
+            if(readPos<topics.size()){
+            	return poll();
+            } 
             return null;
         }else {
             return re;
