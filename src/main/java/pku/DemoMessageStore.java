@@ -96,10 +96,15 @@ public class DemoMessageStore {
 		}
 
 		bodyContent = new byte[intBodyLength];
-		bufferedInputStream.read(bodyContent);
+		bufferedInputStream.read(bodyContent);//读取的是压缩数据，需要解压
+		//对bodyContent进行解压
+		byte[] decompressBody = decompressByte(bodyContent);
+			
+		
 
 		DefaultKeyValue keyValue = makeKeyValue(header);
-		DefaultMessage message = new DefaultMessage(bodyContent);
+		//DefaultMessage message = new DefaultMessage(bodyContent);
+		DefaultMessage message = new DefaultMessage(decompressBody);
 
 		message.setHeaders(keyValue);
 		return message;
@@ -183,7 +188,7 @@ public class DemoMessageStore {
 
 				byte[] header = header(message.headers());
 				byte[] headerLength = intToByteArray(header.length);
-				byte[] body = message.getBody();
+				byte[] body = compressByte(message.getBody());
 				byte[] bodyLength = intToByteArray(body.length);
 
 				bos.write(headerLength);
